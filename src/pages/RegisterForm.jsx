@@ -2,6 +2,8 @@ import React from 'react';
 import LabelledInput from '../components/LabelledInput';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
+import SkyfallenBranding from "../components/SkyfallenBranding";
+import {AiOutlineLock} from "react-icons/ai";
 
 class RegisterForm extends React.Component {
 
@@ -116,28 +118,32 @@ class RegisterForm extends React.Component {
 
     render() {
         return (
-            <>
-                { this.state.success ? <div className="w-96 bg-green-400 rounded-xl py-6 m-auto mt-10 text-white text-center">{ this.state.success }</div> : '' }
-                { this.state.error ? <div className="w-96 bg-red-500 rounded-xl py-6 m-auto mt-10 text-white text-center">{ this.state.error }</div> : '' }
-
-                <form className="w-96 m-auto mt-20 bg-gray-100 rounded-xl pt-10">
-                    <h1 className="text-xl text-center font-semibold mb-16">Sign up to { process.env.REACT_APP_INSTANCE_NAME }</h1>
-                    <LabelledInput Placeholder="Name" Type="text" ChangeHandler={this.nameUpdate.bind(this)} />
-                    <p className="pl-4 text-small text-red-500">{ !this.state.nameValid ? "Please enter a valid name" : "" }</p>
-                    <LabelledInput Placeholder="Email" Type="text" ChangeHandler={this.emailUpdate.bind(this)} />
-                    <p className="pl-4 text-small text-red-500">{ !this.state.emailValid ? "Please enter a valid Email address" : "" }</p>
-                    <LabelledInput Placeholder="Username" Type="text" ChangeHandler={this.usernameUpdate.bind(this)} />
-                    <p className="pl-4 text-small text-red-500">{ !this.state.usernameValid ? "Please enter a valid username" : "" }</p>
-                    <LabelledInput Placeholder="Password" Type="password" ChangeHandler={this.passwordUpdate.bind(this)} />
-                    <p className="pl-4 text-small text-red-500">{ !this.state.passwordValid ? "Passwords must have at least 6 characters." : "" }</p>
-                    <LabelledInput Placeholder="Password Confirmation" Type="password" ChangeHandler={this.pwconfirmUpdate.bind(this)} />
-                    <p className="pl-4 text-small text-red-500">{ !this.state.pwconfirmValid ? "Passwords don't match." : "" }</p>
-                    <div className="p-2">
-                        <Button Text="Sign up" Action={this.auth.bind(this)} />
+            <div className="flex flex-row w-screen">
+                {process.env.REACT_APP_SKYFALLEN_BRANDED === "true" ? <SkyfallenBranding /> : <></>}
+                <div className={`w-1/4 flex ${process.env.REACT_APP_SKYFALLEN_BRANDED !== "true" ? "m-auto" : ""}`}>
+                        <div className="m-auto">
+                            <div className={`absolute ${this.state.error ? "top-10" : "-top-16"} transition-all duration-1000 ease-out w-96 bg-red-500 rounded-xl p-2 m-auto text-white text-center`}>{ this.state.error }</div>
+                            <div className={`absolute ${this.state.success ? "top-10" : "-top-16"} transition-all duration-1000 ease-out w-96 bg-green-500 rounded-xl p-2 m-auto text-white text-center`}>{ this.state.success }</div>
+                            <form className="w-96 m-auto mt-20 bg-gray-100 rounded-xl pt-10">
+                                <h1 className="text-xl text-center font-semibold mb-16">Sign up to { process.env.REACT_APP_INSTANCE_NAME }</h1>
+                                <LabelledInput Placeholder="Name" Type="text" ChangeHandler={this.nameUpdate.bind(this)} />
+                                <p className="pl-4 text-small text-red-500">{ !this.state.nameValid ? "Please enter a valid name" : "" }</p>
+                                <LabelledInput Placeholder="Email" Type="text" ChangeHandler={this.emailUpdate.bind(this)} />
+                                <p className="pl-4 text-small text-red-500">{ !this.state.emailValid ? "Please enter a valid Email address" : "" }</p>
+                                <LabelledInput Placeholder="Username" Type="text" ChangeHandler={this.usernameUpdate.bind(this)} />
+                                <p className="pl-4 text-small text-red-500">{ !this.state.usernameValid ? "Please enter a valid username" : "" }</p>
+                                <LabelledInput Placeholder="Password" Type="password" ChangeHandler={this.passwordUpdate.bind(this)} />
+                                <p className="pl-4 text-small text-red-500">{ !this.state.passwordValid ? "Passwords must have at least 6 characters." : "" }</p>
+                                <LabelledInput Placeholder="Password Confirmation" Type="password" ChangeHandler={this.pwconfirmUpdate.bind(this)} />
+                                <p className="pl-4 text-small text-red-500">{ !this.state.pwconfirmValid ? "Passwords don't match." : "" }</p>
+                                <div className="p-2">
+                                    <Button Text="Sign up" Action={this.auth.bind(this)} />
+                                </div>
+                            </form>
+                            <p className="text-center text-gray-400 mt-10">Already have an account? <br /> <Link to="/accounts/signin" className="underline">Sign in here</Link></p>
                     </div>
-                </form>
-                <p className="text-center text-gray-400 mt-10">Already have an account? <br /> <Link to="/accounts/signin" className="underline">Sign in here</Link></p>
-            </>
+                </div>
+            </div>
         );
     }
 }
